@@ -17,10 +17,15 @@ namespace InventoryManagementSystem.Controllers
             _customerService = customerService; 
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomerController>>> GetCustomer()
+        [HttpGet("api/customers")]
+        public async Task<ActionResult> GetCustomer()
         {
             return Ok(await _customerService.GetAllCustomersAsync());
         }
+
+        //[HttpPost]
+
+       
     }
+
 }

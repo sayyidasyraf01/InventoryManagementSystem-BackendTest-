@@ -16,14 +16,14 @@ namespace InventoryManagementSystem.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Customer>>GetAllCustomersAsync()
+        public async Task<ICollection<Customer>>GetAllCustomersAsync()
         {
             return await _context.Customers.ToListAsync();
         }
 
-        //public async Task<Customer> GetCustomerByIdAsync(int id)
+        //public async task<customer> getcustomerbyidasync(int id)
         //{
-        //    return await _context.Customers.FindAsync(id);
+        //    return await _context.customers.findasync(id);
         //}
     }
 }
