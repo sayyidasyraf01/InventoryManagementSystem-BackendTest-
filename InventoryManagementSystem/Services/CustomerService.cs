@@ -16,14 +16,41 @@ namespace InventoryManagementSystem.Services
             _context = context;
         }
 
+        public Task<Customer> FindAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ICollection<Customer>>GetAllCustomersAsync()
         {
             return await _context.Customers.ToListAsync();
         }
 
-        //public async task<customer> getcustomerbyidasync(int id)
-        //{
-        //    return await _context.customers.findasync(id);
-        //}
+        public async Task<Customer> GetCustomerByIdAsync(int id)
+        {
+            return await _context.Customers.FindAsync(id);
+        }
+
+        public async Task AddCustomerAsync(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateCustomerAsync(Customer customer) //edit
+        {
+            _context.Entry(customer).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCustomerAsync (int id)
+        {
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer != null) { 
+                _context.Customers.Remove(customer); 
+                await _context.SaveChangesAsync();
+            }
+        }
+
     }
 }

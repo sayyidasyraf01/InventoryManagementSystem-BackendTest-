@@ -3,6 +3,7 @@ using InventoryManagementSystem.Models;
 using InventoryManagementSystem.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace InventoryManagementSystem.Controllers
 {
@@ -23,9 +24,50 @@ namespace InventoryManagementSystem.Controllers
             return Ok(await _customerService.GetAllCustomersAsync());
         }
 
-        //[HttpPost]
+        [HttpGet("api/customers/{id}")]
+        public async Task<ActionResult<Customer>> GetCustomerById(int id)
+        {
+            var customer = await _customerService.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return Ok(customer);
+        }
 
-       
+        [HttpPost("add")]
+        public async Task<ActionResult> AddCustomerAsync(Customer customer)
+        {
+            await _customerService.AddCustomerAsync(customer);
+            return CreatedAtAction(nameof(GetCustomer), new { id = customer.CustomerId },customer);
+        }
+
+        [HttpPut("api/customers/{id}")]
+        public async Task<IActionResult> UpdateCustomerAsync(int id, [FromBody] Customer customer)
+        {
+            if (id != customer.CustomerId)
+            {
+                return BadRequest();
+            }
+            await _customerService.UpdateCustomerAsync(customer);
+            return Ok();
+        }
+
+        [HttpDelete("api/customer/delete/{id}")]
+        public async Task<IActionResult>DeleteCustomerAsync(int id)
+        {
+            await _customerService.DeleteCustomerAsync(id);
+            return Ok();
+        }
+
+
+
+
+
+
+
+
+
     }
 
 }
