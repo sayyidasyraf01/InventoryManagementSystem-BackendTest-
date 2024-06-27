@@ -16,11 +16,6 @@ namespace InventoryManagementSystem.Services
             _context = context;
         }
 
-        public Task<Customer> FindAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<ICollection<Customer>>GetAllCustomersAsync()
         {
             return await _context.Customers.ToListAsync();
